@@ -19,24 +19,46 @@ int main()
 
     // Data Process
 
+
+    /*
+    // This is just for testing make_uniform
+    CTimeSeriesSet<double> X("/home/arash/Projects/FFNWrapper/output_c.txt",true);
+    CTimeSeriesSet<double> X_out = X.make_uniform(0.1,2); // increment 0.1, starting from time 2
+    X_out.writetofile("/home/arash/Projects/FFNWrapper/output_uniformized.txt");
+    //
+    */
+
     CTimeSeriesSet<double> Precipitation("/home/behzad/Projects/DataDrivenRR/Precipitation.csv",true);
 
     CTimeSeriesSet<double> Flow("/home/behzad/Projects/DataDrivenRR/flow_WATTSBRANCH.csv",true);
 
 
     const double udt=0.1;
+    const double start_t=40908;
 
     CTimeSeriesSet<double> Precipitation_uniform;
 
     CTimeSeriesSet<double> Flow_uniform;
 
-    Precipitation_uniform = Precipitation.make_uniform(udt);
+    Precipitation_uniform = Precipitation.make_uniform(udt,start_t);
+    Precipitation_uniform.writetofile("/home/behzad/Projects/DataDrivenRR/Precipitation_uniform.csv");
 
-    Flow_uniform = Flow.make_uniform(udt);
+    Flow_uniform = Flow.make_uniform(udt,start_t);
+    Flow_uniform.writetofile("/home/behzad/Projects/DataDrivenRR/Flow_uniform.csv");
+
+    /*
+    CTimeSeriesSet<double> RR_Data;
+    RR_Data.append(Precipitation_uniform);
+    RR_Data.append(Flow_uniform);
+    RR_Data.writetofile("/home/behzad/Projects/DataDrivenRR/observedoutput_0.csv");
+    */
+
+
 
     // Append two timeseries & save
 
     // Simulation & Data Configuration ---> Should be defined
+
 
     const double Realization = 1; // Number of Realizations
     double total_data_cols; // Number of Inputs + Outputs
@@ -53,9 +75,9 @@ int main()
     if (ASM)
     total_data_cols = 9; // Number of Inputs + Outputs (3+4+1)+1
     else
-    total_data_cols = 4; // Number of Inputs + Outputs (1+2)+1
+    total_data_cols = 2; // Number of Inputs + Outputs (1+2)+1
 
-    bool GA = false;  // true for Genetic Alghorithm usage and false for no Genetic Alghorithm usage
+    bool GA = true;  // true for Genetic Alghorithm usage and false for no Genetic Alghorithm usage
     const double GA_Nsim = 100; // Number of GA simulations ???
 
     bool randommodelstructure = false; // true for random model structure usage and false for no random model structure usage
@@ -179,11 +201,11 @@ int main()
     // Lags definition
     vector<int> lag0; lag0.push_back(0);lag0.push_back(14);
     vector<int> lag1; lag1.push_back(14);
-    vector<int> lag2; lag2.push_back(7);lag2.push_back(28);
+    //vector<int> lag2; lag2.push_back(7);lag2.push_back(28);
 
     mymodelstruct.lags.push_back(lag0);
     mymodelstruct.lags.push_back(lag1);
-    mymodelstruct.lags.push_back(lag2);
+    //mymodelstruct.lags.push_back(lag2);
     }
 
     // ---------------------------------------------GA---------------------------------------------------------

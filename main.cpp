@@ -73,7 +73,7 @@ int main()
     bool ASM = false; // true for ASM and false for Settling element simple model
 
     if (ASM)
-    total_data_cols = 10; // Number of Inputs + Outputs (3+1+4+1)+1
+    total_data_cols = 9; // Number of Inputs + Outputs (3+4+1)+1
     else
     total_data_cols = 2; // Number of Inputs + Outputs (1+2)+1
 
@@ -91,7 +91,7 @@ int main()
     modelCreator.maximum_superficial_lag = 5;
     modelCreator.total_number_of_columns = total_data_cols-1; // Inputs
     modelCreator.max_number_of_layers = 4;
-    modelCreator.max_lag_multiplier = 100;
+    modelCreator.max_lag_multiplier = 10;
     modelCreator.max_number_of_nodes_in_layers = 10;
 
 
